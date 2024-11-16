@@ -4,6 +4,10 @@
 #include <ESP8266WiFI.h>
 
 class softAP_config {
+    private:
+        const char* _ssid;
+        const char* _password;
+        
     public:
         // construtor da biblioteca
         softAP_config(const char* ssid, const char* password);

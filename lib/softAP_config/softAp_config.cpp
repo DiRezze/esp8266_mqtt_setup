@@ -1,9 +1,9 @@
 #include "softAP_config.h"
 
-IPAddress local_IP(192, 168, 100, 1);
-IPAddress gateway(192, 168, 100, 1);
-IPAddress subnet(255, 255, 255, 0);
-IPAddress primaryDNS(8, 8, 8, 8); 
+static IPAddress local_IP(192, 168, 100, 1);
+static IPAddress gateway(192, 168, 100, 1);
+static IPAddress subnet(255, 255, 255, 0);
+static IPAddress primaryDNS(8, 8, 8, 8); 
 
 #define apStatus_output 5 // define GPIO5(D1) como saída para o status do SoftAP
 
@@ -13,7 +13,7 @@ softAP_config::softAP_config(const char* ssid, const char* password) : _ssid(ssi
 void softAP_config::startAP() {
     // configura e inicia o softAP
 
-    Serial.println("Ativando o SoftAP...")
+    Serial.println("Ativando o SoftAP...");
 
     pinMode(apStatus_output, OUTPUT);
 
