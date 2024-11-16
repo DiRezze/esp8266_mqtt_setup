@@ -5,14 +5,21 @@ IPAddress gateway(192, 168, 100, 1);
 IPAddress subnet(255, 255, 255, 0);
 IPAddress primaryDNS(8, 8, 8, 8); 
 
+const int digitalPin = 5; // esp8266 D1 ou GPIO5  
+
+// construtor da classe
 softAP_config::softAP_config(const char* ssid, const char* password) : _ssid(ssid), _password(password) {}
 
 void softAP_config::startAP() {
     // configura e inicia o softAP
+
+    pinMode(digitalPin, OUTPUT);
+
     WiFi.softAPConfig(local_IP, gateway, subnet);
     WiFi.softAP(_ssid,_password);
 
     Serial.println("SoftAP ativado!");
+    digitalWrite(digitalPin, HIGH);
 
     Serial.print("Nome da rede: ");
     Serial.println(_ssid);
@@ -38,4 +45,5 @@ void softAP_config::stopAP() {
     // desativa o softAP
     WiFi.softAPdisconnect(true);
     Serial.println("SoftAP desativado.");
+    digitalWrite(digitalPin, LOW);
 }
