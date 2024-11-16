@@ -13,24 +13,13 @@ softAP_config::softAP_config(const char* ssid, const char* password) : _ssid(ssi
 void softAP_config::startAP() {
     // configura e inicia o softAP
 
-    Serial.println("Ativando o SoftAP...");
-
     pinMode(apStatus_output, OUTPUT);
 
     WiFi.softAPConfig(local_IP, gateway, subnet);
     WiFi.softAP(_ssid,_password);
 
-    Serial.println("SoftAP ativado!");
     digitalWrite(apStatus_output, HIGH);
 
-    Serial.print("Nome da rede: ");
-    Serial.println(_ssid);
-
-    Serial.print("Senha:");
-    Serial.println(_password);
-
-    Serial.print("IP: ");
-    Serial.println(WiFi.softAPIP());
 }
 
 void softAP_config::listenForCredentials() {
@@ -46,6 +35,5 @@ void softAP_config::listenForCredentials() {
 void softAP_config::stopAP() {
     // desativa o softAP
     WiFi.softAPdisconnect(true);
-    Serial.println("SoftAP desativado.");
     digitalWrite(apStatus_output, LOW);
 }
