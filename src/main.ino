@@ -40,9 +40,9 @@ void tryWiFiConnection(const char* _ssid, const char* _password, int status_outp
 
     WiFi.begin(_ssid, _password);
 
-    int tentativas = 0;
+    byte tentativa = 0;
 
-    while(WiFi.status() != WL_CONNECTED && tentativas < 10){
+    while(WiFi.status() != WL_CONNECTED && tentativa < 5){
         digitalWrite(status_output, HIGH);
 
         delay(500);
