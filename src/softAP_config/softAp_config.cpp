@@ -7,11 +7,9 @@ static IPAddress primaryDNS(8, 8, 8, 8);
 
 #define apStatus_output 5 // define GPIO5(D1) como saída para o status do SoftAP
 
-// construtor da classe
 softAP_config::softAP_config(const char* ssid, const char* password) : _ssid(ssid), _password(password) {}
 
 void softAP_config::startAP() {
-    // configura e inicia o softAP
 
     Serial.println("Ativando o SoftAP...");
 
@@ -44,7 +42,6 @@ void softAP_config::listenForCredentials() {
 }
 
 void softAP_config::stopAP() {
-    // desativa o softAP
     WiFi.softAPdisconnect(true);
     Serial.println("SoftAP desativado.");
     digitalWrite(apStatus_output, LOW);
