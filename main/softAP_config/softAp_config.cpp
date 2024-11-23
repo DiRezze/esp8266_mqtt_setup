@@ -1,4 +1,4 @@
-#include "softAP_config.h"
+#include "softAp_config.h"
 
 static IPAddress local_IP(192, 168, 100, 1);
 static IPAddress gateway(192, 168, 100, 1);
