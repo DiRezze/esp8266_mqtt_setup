@@ -1,4 +1,5 @@
 #include <ESP8266WiFi.h>
+#include <PubSubClient.h>
 #include <SoftAP_config.h>
 
 #define WiFistatus_output 4 //define o pino GPIO4(D2) como output de status do WiFi
@@ -11,20 +12,31 @@ const char* password = "senhaExemplo";
 const char* WiFi_ssid = "RedeWiFi";
 const char* WiFi_password = "senhaWiFi";
 
+const char* mqtt_server="test.mosquitto.org";
+const char* topic = "topicoteste/rele";
+WiFiClient espClient;
+PubSubClient client(espClient);
+
+const int relay_pin = 14; // refere-se ao GPIO14(D5) do esp8266
+
 softAP_config AP (ssid, password);
 
 void setup(){
     Serial.begin(115200);
 
     pinMode(WiFistatus_output, OUTPUT); 
+    pinMode(relay_pin, OUTPUT);
 
     tryWiFiConnection(WiFi_ssid, WiFi_password, WiFistatus_output);
+
+    client.setServer(mqtt_server, 1833);
+    client.setCallback(callback);
 
 }
 
 void loop(){
-    // código principal do sistema
-    // TODO: ouvinte de conexão com o WiFi
+    if(!client.connected()) reconnect();
+    client.loop();
 }
 
 void tryWiFiConnection(const char* _ssid, const char* _password, int status_output){
@@ -51,7 +63,7 @@ void tryWiFiConnection(const char* _ssid, const char* _password, int status_outp
 
         Serial.print(".");
 
-        tentativas++;
+        tentativa++;
 
     }
 
@@ -70,4 +82,42 @@ void tryWiFiConnection(const char* _ssid, const char* _password, int status_outp
 
     }
 
+}
+
+void callback(char* topic, byte* payload, unsigned int length){
+    Serial.print("[INFO] Mensagem recebida no tópico:");
+    Serial.println(topic);
+
+    String message;
+
+    for(int i =0; i < length; i++){
+        message += (char)payload[i];
+    }
+
+    Serial.print(" - Mensagem:");
+    Serial.println(message);
+
+    if(message == "ON") {
+        digitalWrite(relay_pin, HIGH);
+        Serial.println("[INFO] Relé ligado.");
+    }
+    if(message == "OFF") {
+        digitalWrite(relay_pin, LOW);
+        Serial.println("[INFO] Relé desligado.");
+    }
+
+}
+
+void reconnect() {
+    while (!client.connected()) {
+            Serial.print("Conectando ao broker MQTT...");
+        if (client.connect("ESP8266Client")) {
+            Serial.println("Conectado!");
+            client.subscribe(topic);
+        } else {
+            Serial.print("Falha, estado: ");
+            Serial.println(client.state());
+            delay(5000);
+        }
+    }
 }
