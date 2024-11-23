@@ -1,6 +1,6 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
-#include <SoftAP_config.h>
+#include "softAP_config/softAP_config.h"
 
 #define WiFistatus_output 4 //define o pino GPIO4(D2) como output de status do WiFi
 
