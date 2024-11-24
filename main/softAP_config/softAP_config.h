@@ -6,7 +6,7 @@
 class softAP_config {
     private:
         const char* _ssid;
-        const char* _password
+        const char* _password;
     public:
         // construtor da biblioteca
         softAP_config(const char* ssid, const char* password);
@@ -20,6 +20,6 @@ class softAP_config {
         // interrompe o SoftAP
         void stopAP();
         
-}
+};
 
 #endif // softAP_config
