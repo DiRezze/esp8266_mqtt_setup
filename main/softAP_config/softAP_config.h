@@ -15,7 +15,7 @@ class softAP_config {
         // Inicia o SoftAP com os parâmetros hardcodificados em ./softAP_config.cpp
         void startAP();
 
-        // Escuta por credenciais através de UDP
+        // Escuta por credenciais através de algum protocolo que eu não pensei ainda
         void listenForCredentials();
 
         // Interrompe o SoftAP

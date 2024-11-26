@@ -10,7 +10,7 @@
 const char* ssid = "Esp8266SoftAP";
 const char* password = "senhaExemplo";
 
-// ssid e senha de uma suposta rede WiFi armazenada ou recebida pelo ESP8266
+// ssid e senha de uma suposta rede WiFi
 const char* WiFi_ssid = "RedeWiFi";
 const char* WiFi_password = "senhaWiFi";
 
@@ -31,9 +31,13 @@ void callback(char* topic, byte* payload, unsigned int length){
 
     if (message == "ON") {
         digitalWrite(relay_pin, HIGH);
-    } else if (message == "OFF") {
-        digitalWrite(relay_pin, LOW);
+        return;
     }
+    if (message == "OFF"){
+        digitalWrite(relay_pin, LOW);q
+        return
+    }
+
 }
 
 void tryWiFiConnection(const char* _ssid, const char* _password, int status_output){
