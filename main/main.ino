@@ -14,6 +14,7 @@ const char* password = "senhaExemplo";
 const char* WiFi_ssid = "RedeWiFi";
 const char* WiFi_password = "senhaWiFi";
 
+// parâmetros do mqtt
 const char* mqtt_server="test.mosquitto.org";
 const char* topic = "topicoteste/rele";
 WiFiClient espClient;
@@ -34,7 +35,7 @@ void callback(char* topic, byte* payload, unsigned int length){
         return;
     }
     if (message == "OFF"){
-        digitalWrite(relay_pin, LOW);q
+        digitalWrite(relay_pin, LOW);
         return
     }
 
@@ -54,7 +55,7 @@ void tryWiFiConnection(const char* _ssid, const char* _password, int status_outp
 
     byte tentativa = 0;
 
-    while(WiFi.status() != WL_CONNECTED && tentativa < 10){  // Aumentei para 10 tentativas
+    while(WiFi.status() != WL_CONNECTED && tentativa < 10){
         digitalWrite(status_output, HIGH);
         delay(500);
         digitalWrite(status_output, LOW);
@@ -97,5 +98,5 @@ void loop(){
 
     client.loop();
 
-    delay(10);
+    delay(10); // atrasa 10 milissegundos para evitar sobrecarga do hardware
 }
